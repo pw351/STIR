@@ -23,6 +23,7 @@ set(dir utilities)
 set(dir_EXE_SOURCES ${dir}_EXE_SOURCES)
 
 set(${dir_EXE_SOURCES}
+    list_singles
   manip_image 
   stir_write_pgm
 	manip_projdata 
@@ -66,6 +67,7 @@ set(${dir_EXE_SOURCES}
 	apply_normfactors3D
 	apply_normfactors
 	construct_randoms_from_singles
+        construct_randoms_from_GEsingles
 	find_ML_normfactors3D
 	find_ML_normfactors
 	find_ML_singles_from_delayed

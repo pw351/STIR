@@ -32,8 +32,14 @@ if (HAVE_ECAT)
 	SinglesRatesFromSglFile 
 	SinglesRatesFromECAT7  
   )
-endif()
 
+endif()
+if (HAVE_HDF5)
+    list (APPEND  ${dir_LIB_SOURCES}
+        SinglesRatesFromGEHDF5
+  )
+
+endif()
 include(stir_lib_target)
 
 target_link_libraries(${dir} buildblock)
