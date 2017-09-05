@@ -323,61 +323,6 @@ read_singles_from_listmode_file(const std::string& _listmode_filename)
 {
 
   int slice = 0;
-//PW Probably get rid of this?
-/*#ifndef HAVE_LLN_MATRIX
-
-  error("Compiled without ECAT7 support\n");
-
-#else
-	info(boost::format("CListModeDataGESigna: opening file %1%") % listmode_filename);
- */
-     
-/* PW Modified this bit for HDF5. So now reading data in sample1 from HDF5 instead of sgl.
-  std::ifstream singles_file(sgl_filename.c_str(), std::ios::binary);
-
-  
-if (!singles_file) {
-    error("\nSinglesRatesFromGEHDF5: Couldn't open \"%s\".\n", sgl_filename.c_str());
-  }
-
-  
-  //first find out the size of the file
-  singles_file.seekg(0, ios::end);
-  const streampos end_stream_position = singles_file.tellg();
-  if (!singles_file) {
-    error("\nSinglesRatesFromGEHDF5: Couldn't seek to end of file %s.",sgl_filename.c_str());
-  }
-
-
-  // go to the beginning and read the singles header
-  singles_file.seekg(0, ios::beg);
- 
-  if (!singles_file) {
-    error("\nSinglesRatesFromGEHDF5: Couldn't seek to start of file %s.",sgl_filename.c_str());
-  }
-  
-
-  {
-
-char buffer[sizeof(Main_header)];
-   singles_file.read(buffer,sizeof(_singles_main_header));
-    if (!singles_file)
-    {
-      error("\nSinglesRatesFromGEHDF5: Couldn't read main_header from %s.",sgl_filename.c_str());
-    }
-    else
-    {
-      unmap_main_header(buffer, &_singles_main_header);
-      ecat::ecat7::find_scanner(scanner_sptr, _singles_main_header);
-    }
-  }
-
-  
-  if (scanner_sptr->get_type() != Scanner::E966) {
-    warning("check SinglesRatesFromGEHDF5 for non-966\n");
-  }
-
-*/
 
   //PW Open the list mode file here.
       this->open( _listmode_filename );
