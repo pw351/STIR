@@ -63,6 +63,7 @@ option(DISABLE_LLN_MATRIX "disable use of LLN library" OFF)
 option(DISABLE_ITK "disable use of ITK library" OFF)
 option(DISABLE_AVW "disable use of AVW library" OFF)
 option(DISABLE_RDF "disable use of GE RDF library" OFF)
+option(DISABLE_HDF5_SUPPORT "disable use of HDF5 libraries" OFF)
 option(DISABLE_STIR_LOCAL "disable use of LOCAL extensions to STIR" OFF)
 option(DISABLE_CERN_ROOT_SUPPORT "disable use of Cern ROOT libraries" OFF)
 
@@ -74,6 +75,11 @@ endif()
 if(NOT DISABLE_LLN_MATRIX)
   find_package(LLN)
 endif()
+
+if(NOT DISABLE_HDF5_SUPPORT)
+    find_package(HDF5 COMPONENTS CXX)
+endif()
+
 
 if(NOT DISABLE_CERN_ROOT_SUPPORT)
   find_package(CERN_ROOT)
