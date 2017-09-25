@@ -1494,6 +1494,12 @@ namespace stir {
     ToPoissonLogLikelihoodWithLinearModelForMeanAndProjData(stir::GeneralisedObjectiveFunction<T> *b) {
     return dynamic_cast<stir::PoissonLogLikelihoodWithLinearModelForMeanAndProjData<T>*>(b);
 }
+  stir::ProjDataInfoCylindricalNoArcCorr *
+ ToProjData(stir::ProjDataInfo *pdi_ptr)
+{
+  return dynamic_cast<stir::ProjDataInfoCylindricalNoArcCorr *>(pdi_ptr);
+}
+
 %}
 
 %template(ToPoissonLogLikelihoodWithLinearModelForMeanAndProjData3DFloat) ToPoissonLogLikelihoodWithLinearModelForMeanAndProjData<TargetT >;
