@@ -28,7 +28,7 @@ set(${dir_EXE_SOURCES}
   stir_write_pgm
 	manip_projdata 
 	display_projdata 
-	do_linear_regression 
+        do_linear_regression
 	postfilter 
 	compare_projdata 
 	compare_image 
