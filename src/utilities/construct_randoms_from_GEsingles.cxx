@@ -113,7 +113,7 @@ int main(int argc, char **argv)
             for (int c=0; c<num_detectors_per_ring; ++c)
             {
                 DetectionPosition<> pos(c,r,0);
-                efficiencies[r][c]=singles.get_singles_rate(pos,0., 300.);
+                efficiencies[r][c]=singles.get_singles_rate(pos,0., 602.);
             }
        // int timesamples=singles._num_time_slices;
       }
@@ -230,7 +230,7 @@ int main(int argc, char **argv)
 
                 /*(*segment_ptr)[bin.axial_pos_num()]*/
                 sinogram[bin.view_num()][bin.tangential_pos_num()] +=
-                300*0.00000000457*efficiencies[ra][a]*efficiencies[rb][b%num_detectors_per_ring];
+                601*0.00000000457*efficiencies[ra][a]*efficiencies[rb][b%num_detectors_per_ring];
                   }
               }
               }
