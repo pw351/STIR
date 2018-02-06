@@ -67,7 +67,7 @@ initialise_ring_diff_arrays_if_not_done_yet() const
 
 float
 ProjDataInfoCylindrical::get_phi(const Bin& bin)const
-{ return bin.view_num()*azimuthal_angle_sampling;}
+{ return bin.view_num()*azimuthal_angle_sampling+ scanner_ptr->get_default_intrinsic_tilt();}
 
 
 float

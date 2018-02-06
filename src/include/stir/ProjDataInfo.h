@@ -329,9 +329,9 @@ public:
   
 protected:
   virtual bool blindly_equals(const root_type * const) const = 0;
+  shared_ptr<Scanner> scanner_ptr;
 
 private:
-  shared_ptr<Scanner> scanner_ptr;
   int min_view_num;
   int max_view_num;
   int min_tangential_pos_num;

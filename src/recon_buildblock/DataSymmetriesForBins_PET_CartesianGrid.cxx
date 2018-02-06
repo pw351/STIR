@@ -194,6 +194,15 @@ DataSymmetriesForBins_PET_CartesianGrid
     error("DataSymmetriesForBins_PET_CartesianGrid can only handle projection data "
 	  "with tangential_pos_num s.t. get_s(...,tang_pos_num)==-get_s(...,-tang_pos_num)\n");
 
+  //PW Disabling some symmetries due to phi offset.
+    if (fabs(proj_data_info_ptr->get_phi(Bin(0,0,0,0)))>1.E-4F)
+    {
+
+         warning("Disabling symmetries as image is rotated due to phi offset of the scanner.");
+         do_symmetry_90degrees_min_phi = false;
+         do_symmetry_180degrees_min_phi = false;
+
+      }
   if (fabs(image_info_ptr->get_origin().x())>.01F || fabs(image_info_ptr->get_origin().y())>.01F)
     {
       // disable symmetries with shifted images
