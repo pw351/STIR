@@ -71,6 +71,7 @@ set(${dir_EXE_SOURCES}
 	find_ML_normfactors3D
 	find_ML_normfactors
 	find_ML_singles_from_delayed
+        atten_image_from_xcat
 )
 
 if (AVW_FOUND)

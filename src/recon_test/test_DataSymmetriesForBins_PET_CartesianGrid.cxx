@@ -211,7 +211,7 @@ run_tests_2_proj_matrices(const ProjMatrixByBin& proj_matrix_no_symm,
   const int view45 = 
     proj_data_info_sptr->get_num_views()/4;
   assert(fabs(proj_data_info_sptr->
-	      get_phi(Bin(0,view45,0,0)) - _PI/4)<.001);
+          get_phi(Bin(0,view45,0,0)) - _PI/4)<.001);
   
   {
     const Bin bin(oblique_seg_num,1,5,6);
@@ -693,7 +693,7 @@ DataSymmetriesForBins_PET_CartesianGridTests::run_tests()
 					/*max_delta=*/5,
 					/*num_views=*/8,
 					/*num_tang_poss=*/16));
-  
+
 	run_tests_for_1_projdata(proj_data_info_sptr);
       }
       {  

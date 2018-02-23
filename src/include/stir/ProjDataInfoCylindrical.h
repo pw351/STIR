@@ -78,7 +78,7 @@ public:
     const int num_views,const int num_tangential_poss);
 
   inline virtual float get_tantheta(const Bin&) const; 
-		       
+
   inline float get_phi(const Bin&) const; 
  
   inline float get_t(const Bin&) const;
@@ -257,7 +257,7 @@ protected:
       is a HiDAC scanner. This needs to be changed.
       */
   bool sampling_corresponds_to_physical_rings;
-  
+
 protected:
   virtual bool blindly_equals(const root_type * const) const = 0;
 

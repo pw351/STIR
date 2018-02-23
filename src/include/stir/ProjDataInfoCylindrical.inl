@@ -36,6 +36,7 @@
 #include "stir/Bin.h"
 #include "stir/Succeeded.h"
 #include "stir/is_null_ptr.h"
+#include "stir/Scanner.h"
 #include <algorithm>
 
 START_NAMESPACE_STIR
@@ -64,7 +65,7 @@ initialise_ring_diff_arrays_if_not_done_yet() const
       }
     }
 }
-
+//PW Added the view offset from scanner, code may now support intrinsic tilt.
 float
 ProjDataInfoCylindrical::get_phi(const Bin& bin)const
 { return bin.view_num()*azimuthal_angle_sampling+ scanner_ptr->get_default_intrinsic_tilt();}

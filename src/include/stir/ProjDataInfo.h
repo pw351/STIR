@@ -200,8 +200,9 @@ public:
   
   //! Get azimuthal angle phi of the normal to the projection plane
   /*! phi=0 when the normal vector has no component along the horizontal axis */
+ //PW get_phi will take the value for angle from scanner_ptr and returns it.
   virtual float get_phi(const Bin&) const =0;
-  
+
   //! Get value of the (roughly) axial coordinate in the projection plane (in mm)
   /*! t-axis is defined to be orthogonal to the s-axis (and to the vector
       normal to the projection plane */
@@ -326,12 +327,13 @@ public:
   
   //! Return a string describing the object
   virtual std::string parameter_info() const;
-  
+
 protected:
   virtual bool blindly_equals(const root_type * const) const = 0;
+  //PW Shifted scanner_ptr from private to protected as it is being used in the derived class to accomodate for intrinsic tilt.
   shared_ptr<Scanner> scanner_ptr;
-
 private:
+
   int min_view_num;
   int max_view_num;
   int min_tangential_pos_num;

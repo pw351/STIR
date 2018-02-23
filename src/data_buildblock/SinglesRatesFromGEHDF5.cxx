@@ -434,28 +434,6 @@ const int    RANK_OUT = 2;
       dataset.read( _singles[slice].get_data_ptr(), H5::PredType::NATIVE_INT, memspace, dataspace );
       _singles[slice].release_data_ptr();
 
-  
-/*
-
-    // Copy the singles values to the main array.
-    
-    // Note. The singles values are arranged num_axial sets of num_transaxial
-    // values.
-    //
-    // For a singles values for a unit at axial_index, transaxial_index
-    // the values is found at single_str.sgl[]
-    // singles_str.sgl[ transaxial_index + (axial_index * num_transaxial) ]
-    //
-    // The singles values are stored in the _singles array in the same order.
-    // For other file formats the ordering of the units may be different.
-    for (int singles_bin = 0; singles_bin < total_singles_units; ++singles_bin) {
-      _singles[slice][singles_bin] = static_cast<int>(singles_str.sgl[singles_bin]);
-    }
-    
-*/   
-//PW Probably need to do something similar for .BLF   
- // singles in the sgl file given in msec.multiply with 0.001 to convert into sec.
-  //  _times.push_back(singles_str.time*0.001);
 
  // Increment the slice index.
     ++slice;
