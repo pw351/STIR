@@ -84,7 +84,7 @@ lor_rotate_Tests::run_tests()
                                                                  /* arc_correction*/false));
 
     test_lor_info();
-//    test_tof_geometry_1();
+    //    test_tof_geometry_1();
 
     // New Discretised Density
     test_discretised_density_sptr.reset( new VoxelsOnCartesianGrid<float> (*test_proj_data_info_sptr, 1.f,
@@ -110,61 +110,75 @@ lor_rotate_Tests::run_tests()
 }
 
 void
-TOF_Tests::test_lor_info()
+lor_rotate_Tests::test_lor_info()
 {
 
-    ProjDataInfoCylindrical* proj_data_ptr =
-            dynamic_cast<ProjDataInfoCylindrical*> (test_proj_data_info_sptr.get());
+    ProjDataInfoCylindricalNoArcCorr* proj_data_ptr =
+            dynamic_cast<ProjDataInfoCylindricalNoArcCorr*> (test_proj_data_info_sptr.get());
     Bin org_bin(0,15,0,24, /* value*/1);
 
-           CartesianCoordinate3D<float> coord_1;
-           CartesianCoordinate3D<float> coord_2;
+    int origDet1, origDet2;
+    int origRing1, origRing2;
 
-           proj_data_ptr.find_cartesian_coordinates_of_detection(coord_1,coord_2,org_bin);
+    int newDet1, newDet2;
+    int newRing1, newRing2;
 
-std::cout<<coord_1.x()<<"This is the x- coordinate of the detector" << std::endl;
-std::cout<<coord_1.y()<<"This is the y- coordinate of the detector" << std::endl;
-std::cout<<coord_1.z()<<"This is the z- coordinate of the detector" << std::endl;
-std::cout<<coord_2.x()<<"This is the x- coordinate of the detector" << std::endl;
-std::cout<<coord_2.y()<<"This is the y- coordinate of the detector" << std::endl;
-std::cout<<coord_1.z()<<"This is the z- coordinate of the detector" << std::endl;
-
-
-const int view2 = 15-test_scanner_sptr->get_default_intrinsic_tilt()/proj_data_ptr->get_azimuthal_angle_sampling();
-
-Bin new_bin(0,view2,0,24,1);
-CartesianCoordinate3D<float> coord_1_new;
-CartesianCoordinate3D<float> coord_2_new;
-
-    std::cerr<< lor_point_1.x() << " " << lor_point_1.y() << " " << lor_point_1.z() << " " <<
-                lor_point_2.x() << " " << lor_point_2.y() << " " << lor_point_2.z() << std::endl;
-
-
-    check_if_equal(correct_tof_mashing_factor,
-                   test_proj_data_info_sptr->get_tof_mash_factor(), "Different TOF mashing factor.");
-
-    check_if_equal(num_timing_positions,
-                   test_proj_data_info_sptr->get_num_tof_poss(), "Different number of timing positions.");
-
-    for (int timing_num = test_proj_data_info_sptr->get_min_tof_pos_num(), counter = 0;
-         timing_num <= test_proj_data_info_sptr->get_max_tof_pos_num(); ++ timing_num, counter++)
+    proj_data_ptr->get_det_pair_for_bin(origDet1, origRing1, origDet2, origRing2,
+                                        org_bin);
+    // Test relationship between angle and view, through bins, for away of the center of FOV.
+    for (int i = 0; i < proj_data_ptr->get_num_views() ; ++i)
     {
-        Bin bin(0, 0, 0, 0, timing_num, 1.f);
+        Bin new_bin = org_bin;
+        new_bin.view_num() += i;
 
-        check_if_equal(static_cast<double>(correct_width_of_tof_bin),
-                       static_cast<double>(test_proj_data_info_sptr->get_sampling_in_k(bin)), "Error in get_sampling_in_k()");
-        check_if_equal(static_cast<double>(correct_timing_locations[counter]),
-                       static_cast<double>(test_proj_data_info_sptr->get_k(bin)), "Error in get_sampling_in_k()");
+        proj_data_ptr->get_det_pair_for_bin(newDet1, newRing1, newDet2, newRing2,
+                                            new_bin);
+
+        std::cout << /*"ODet1 " << origDet1 << " ODet2 " << origDet2 <<*/ "\n" <<
+                     "NDet1 " << newDet1 << " NDet2 " << newDet2 << std::endl;
+
     }
 
-    float total_width = test_proj_data_info_sptr->get_k(Bin(0,0,0,0,test_proj_data_info_sptr->get_max_tof_pos_num(),1.f))
-            - test_proj_data_info_sptr->get_k(Bin(0,0,0,0,test_proj_data_info_sptr->get_min_tof_pos_num(),1.f))
-            + test_proj_data_info_sptr->get_sampling_in_k(Bin(0,0,0,0,0,1.f));
+    int nikos = 0;
 
-    set_tolerance(static_cast<double>(0.005));
-    check_if_equal(static_cast<double>(total_width), static_cast<double>(test_proj_data_info_sptr->get_coincidence_window_width()),
-                   "Coincidence widths don't match.");
+//    CartesianCoordinate3D<float> coord_1;
+//    CartesianCoordinate3D<float> coord_2;
 
+//    proj_data_ptr->find_cartesian_coordinates_of_detection(coord_1,coord_2,org_bin);
+
+//    int det1, det2,ring1, ring2;
+//    proj_data_ptr->find_scanner_coordinates_given_cartesian_coordinates(det1,det2, ring1, ring2,coord_1,coord_2);
+//    std::cout<<det1<<" This is the number of det1" << std::endl;
+//    std::cout<<det2<<" This is the number of det2" << std::endl;
+
+
+//    CartesianCoordinate3D<float> coord_1_new;
+//    CartesianCoordinate3D<float> coord_2_new;
+
+//    proj_data_ptr->find_cartesian_coordinates_of_detection(coord_1_new,coord_2_new,new_bin);
+
+//    int det1_new, det2_new,ring1_new, ring2_new;
+//    proj_data_ptr->find_scanner_coordinates_given_cartesian_coordinates(det1_new,det2_new, ring1_new, ring2_new,coord_1_new,coord_2_new);
+
+//    float phi = test_scanner_sptr->get_default_intrinsic_tilt();
+//    std::cout<<"The default intrinsic tilt is "<<phi<<std::endl;
+
+//    CartesianCoordinate3D<float> coord_1_new_rotated;
+//    coord_1_new_rotated.x() = coord_1.x()*cos(phi)-coord_1.y()*sin(phi);
+//    coord_1_new_rotated.y() = coord_1.x()*sin(phi)+coord_1.y()*cos(phi);
+//    coord_1_new_rotated.z() = coord_1.z();
+
+//    CartesianCoordinate3D<float> coord_2_new_rotated;
+//    coord_2_new_rotated.x() = coord_2.x()*cos(phi)-coord_2.y()*sin(phi);
+//    coord_2_new_rotated.y() = coord_2.x()*sin(phi)+coord_2.y()*cos(phi);
+//    coord_2_new_rotated.z() = coord_2.z();
+
+//    std::cout<<coord_1_new_rotated.x()<<"This is the x- coordinate of the coord1_new_rotated" << std::endl;
+//    std::cout<<coord_1_new_rotated.y()<<"This is the y- coordinate of the coord1_new_rotated" << std::endl;
+//    std::cout<<coord_1_new_rotated.z()<<"This is the z- coordinate of the coord1_new_rotated" << std::endl;
+//    std::cout<<coord_2_new_rotated.x()<<"This is the x- coordinate of the coord2_new_rotated" << std::endl;
+//    std::cout<<coord_2_new_rotated.y()<<"This is the y- coordinate of the coord2_new_rotated" << std::endl;
+//    std::cout<<coord_2_new_rotated.z()<<"This is the z- coordinate of the coord2_new_rotated" << std::endl;
 
 }
 
@@ -173,7 +187,7 @@ END_NAMESPACE_STIR
 int main()
 {
     USING_NAMESPACE_STIR
-    TOF_Tests tests;
+            lor_rotate_Tests tests;
     tests.run_tests();
     return tests.main_return_value();
 }
