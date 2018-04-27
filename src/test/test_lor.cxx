@@ -1,0 +1,26 @@
+//#include "stir/ProjDataInfoCylindricalNoArcCorr.h"
+//#include "stir/recon_buildblock/ProjMatrixByBin.h"
+//#include "stir/recon_buildblock/ProjMatrixByBinUsingRayTracing.h"
+//#include "stir/recon_buildblock/ForwardProjectorByBinUsingProjMatrixByBin.h"
+//#include "stir/recon_buildblock/BackProjectorByBinUsingProjMatrixByBin.h"
+//#include "stir/recon_buildblock/ProjMatrixElemsForOneBin.h"
+//#include "stir/recon_buildblock/ProjectorByBinPair.h"
+//#include "stir/recon_buildblock/ProjectorByBinPairUsingSeparateProjectors.h"
+//#include "stir/HighResWallClockTimer.h"
+//#include "stir/DiscretisedDensity.h"
+//#include "stir/VoxelsOnCartesianGrid.h"
+//#include "stir/recon_buildblock/ProjMatrixElemsForOneBin.h"
+//#include "stir/ViewSegmentNumbers.h"
+//#include "stir/RelatedViewgrams.h"
+////#include "stir/geometry/line_distances.h"
+//#include "stir/Succeeded.h"
+//#include "stir/shared_ptr.h"
+//#include "stir/RunTests.h"
+//#include "stir/Scanner.h"
+//#include "boost/lexical_cast.hpp"
+
+//#include "stir/info.h"
+//#include "stir/warning.h"
+
+//START_NAMESPACE_STIR
+
