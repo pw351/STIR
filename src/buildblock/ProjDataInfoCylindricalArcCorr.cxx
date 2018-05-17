@@ -4,6 +4,7 @@
     Copyright (C) 2000 PARAPET partners
     Copyright (C) 2000- 2007, Hammersmith Imanet Ltd
     Copyright (C) 2018, University College London
+    Copyright (C) 2018, University of Leeds
     This file is part of STIR.
 
     This file is free software; you can redistribute it and/or modify
@@ -28,6 +29,7 @@
 
   \author Sanida Mustafovic
   \author Kris Thielemans
+  \author Palak Wadhwa
   \author PARAPET project
 
 
@@ -133,29 +135,14 @@ get_bin(const LOR<float>& lor) const
     }
 
   // first find view 
-  // unfortunately, phi ranges from [0,Pi[, but the rounding can
-  // map this to a view which corresponds to Pi anyway.
-  bool swap_direction = false;
-  bool swap_seg = false;
-  bin.view_num() = round((lor_coords.phi()-scanner_ptr->get_default_intrinsic_tilt()) / get_azimuthal_angle_sampling());
-
-  if (bin.view_num()>get_num_views())
-      bin.view_num() -=get_max_view_num();
-
-  if (bin.view_num()<get_min_view_num())
-  {
-      bin.view_num() +=get_max_view_num();
-      swap_seg = true;
-  }
-
+  //PW phi-intrinsic_tilt included to get the accurate bin.view_number.
+  bin.view_num() = round(to_0_2pi(lor_coords.phi()-get_scanner_ptr()->get_default_intrinsic_tilt()) / get_azimuthal_angle_sampling());
   assert(bin.view_num()>=0);
-  assert(bin.view_num()<=get_num_views());
-
-  swap_direction =
-    bin.view_num() > get_max_view_num();//+round((scanner_ptr->get_default_intrinsic_tilt() / get_azimuthal_angle_sampling()));
-
+  const bool swap_direction =
+    bin.view_num() > get_max_view_num();
   if (swap_direction)
     bin.view_num()-=get_num_views();
+  assert(bin.view_num()<get_num_views());
 
   bin.tangential_pos_num() = round(lor_coords.s() / get_tangential_sampling());
   if (swap_direction)
