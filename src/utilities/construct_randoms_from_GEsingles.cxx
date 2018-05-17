@@ -113,7 +113,10 @@ int main(int argc, char **argv)
             for (int c=0; c<num_detectors_per_ring; ++c)
             {
                 DetectionPosition<> pos(c,r,0);
-                efficiencies[r][c]=singles.get_singles_rate(pos,0., 100.);
+                double time_init = 0.;
+                int time_final = static_cast<double>(singles.get_num_time_slices());
+
+                efficiencies[r][c]=singles.get_singles_rate(pos, time_init, time_final);
             }
        // int timesamples=singles._num_time_slices;
       }
@@ -224,13 +227,15 @@ int main(int argc, char **argv)
 
                 int ra = 0, a = 0;
                 int rb = 0, b = 0;
-
+                SinglesRatesFromGEHDF5 singles;
+                int num_slices = singles.get_num_time_slices();
+                std::cout<<"This is the number of slices"<<num_slices<<std::endl;
                 uncompressed_proj_data_info_ptr->get_det_pair_for_bin(a, ra, b, rb,
                                               uncompressed_bin);
 
                 /*(*segment_ptr)[bin.axial_pos_num()]*/
                 sinogram[bin.view_num()][bin.tangential_pos_num()] +=
-                100*0.00000000457*efficiencies[ra][a]*efficiencies[rb][b%num_detectors_per_ring];
+                num_slices*0.00000000457*efficiencies[ra][a]*efficiencies[rb][b%num_detectors_per_ring];
                   }
               }
               }

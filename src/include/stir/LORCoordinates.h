@@ -443,7 +443,7 @@ class LORInAxialAndNoArcCorrSinogramCoordinates
     assert(private_base_type::_radius>0);
     assert(_beta>=static_cast<coordT>(-_PI/2));
     assert(_beta<static_cast<coordT>(_PI/2));
-   // assert(_phi<static_cast<coordT>(_PI));
+    //assert(_phi<static_cast<coordT>(_PI));
     assert(_phi>=0);
   }
  public:
