@@ -103,7 +103,7 @@
 #include <cstdlib>
 #include <cstring>
 #include <cmath>
-
+#include <boost/math/constants/constants.hpp>
 
 //*************** namespace macros
 #ifndef STIR_NO_NAMESPACES
@@ -295,7 +295,9 @@ START_NAMESPACE_STIR
 
 //! The constant pi to high precision.
 /*! \ingroup buildblock */
-const double _PI = 3.14159265358979323846264338327950288419716939937510;
+#ifndef _PI
+#define _PI  boost::math::constants::pi<double>()
+#endif
 
 //! returns the square of a number, templated.
 /*! \ingroup buildblock */
