@@ -18,7 +18,7 @@
  \file
  \ingroup utilities
 
- \brief This program Converts Hounsfield units to 1/cm in order to do calculate_attenuation_coefficients.
+ \brief This program inverts x y or z axis. It is also able to remove nan from the image.
  \author Daniel Deidda
  */
 #include "stir/DiscretisedDensity.h"
@@ -30,7 +30,8 @@ int main(int argc, char **argv)
 {
   if(argc!=4) {
     std::cerr << "Usage: " << argv[0]
-              << " <axis name>  <output filename> <input filename>\n";
+              << " <axis name>  <output filename> <input filename>\n"
+              << " if <axis name>= nan the utility will substitute every nan value with zero  ";
     exit(EXIT_FAILURE);
   }
   char const * const axis_name = argv[1];
@@ -51,7 +52,7 @@ std::cout<<" the axis to invert is "<< name<<std::endl;
 
       for (int z=min_z; z<=max_z; z++)
         {
-
+//std::cout<<" pos "<< z<< " "<<std::endl;
           const int min_y = image[z].get_min_index();
           const int max_y = image[z].get_max_index();
 
@@ -64,14 +65,23 @@ std::cout<<" the axis to invert is "<< name<<std::endl;
                 const int max_x = image[z][y].get_max_index();
 
 
-
                   for (int x=min_x;x<= max_x;x++)
                   {
                      // std::cout<<" pos "<< z<< " "<<-y-1 <<" "<<y<<std::endl;
                     if (name=="x"){
+                      if((max_x%2)==0)
+                        {
                         output[z][y][x]=image[z][y][-x-1];
+                        }
+                      else
+                        {
+                        output[z][y][z]=image[z][y][-x];
+                        }
                     }
                   else if (name=="y"){
+                        if((max_y%2)==0)
+                        {
+
                         //std::cout<<" image "<< image[0][-172][171]<<std::endl;
                         //if (image[z][-y-1][x]==image[0][-172][171]){
                             //std::cout<<" image "<< image[z][-y-1][x]<<std::endl;
@@ -81,12 +91,35 @@ std::cout<<" the axis to invert is "<< name<<std::endl;
                        // }
                         output[z][y][x]=image[z][-y-1][x];
                     }
+                        else
+                        {
+                            output[z][y][x]=image[z][-y][x];
+                        }
+                    }
                     else if (name=="z"){
                         //std::cout<<" pos "<< z<< " "<<max_z-z <<" "<<y<<std::endl;
                         output[z][y][x]=image[max_z-z][y][x];
                     }
+                    else if (name=="inf"){
+                    if(image[z][y][x]>10000000000 || image[z][y][x]<-100000){
+                        //if(image[z][y][x]!=1 ){
+                        //output[z][y][x] = std::numeric_limits<double>::quiet_NaN();
+                       // std::cout<<"inf"<<image[z][y][x]<<std::endl;
+                      output[z][y][x]=0;
+                    }
+                    else continue;}
+                    else if (name=="nan"){
+                    if(image[z][y][x]>=0 && image[z][y][x]<=1000000){
+                        //if(image[z][y][x]!=1 ){
+                        //output[z][y][x] = std::numeric_limits<double>::quiet_NaN();
+                        //std::cout<<"nan"<<image[z][y][x]<<std::endl;
+                      continue;
+                    }
+                    else{
+                      output[z][y][x]=0;
+                    }
 
-                  }
+                  }}
               }
           }
   //std::cout<<" image "<< image[0][-172][172]<<std::endl;

@@ -69,7 +69,7 @@ set(${dir_LIB_SOURCES}
 	PLSPrior
 	QuadraticPrior 
 	FilterRootPrior 
-	GeneralisedObjectiveFunction 
+	GeneralisedObjectiveFunction
 	PoissonLogLikelihoodWithLinearModelForMean 
 	PoissonLogLikelihoodWithLinearModelForMeanAndProjData 
 	PoissonLogLikelihoodWithLinearModelForMeanAndListModeData 
